@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:burger_api/app/modules/auth/auth_controller.dart';
+import 'package:burger_api/app/modules/order/order_controller.dart';
 import 'package:burger_api/app/modules/product/product_controller.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
@@ -13,7 +14,8 @@ final staticFiles = createStaticHandler('images/', listDirectories: true);
 final _router = Router()
   ..mount('/images', staticFiles)
   ..mount('/auth', AuthController().router)
-  ..mount('/products', ProductController().router);
+  ..mount('/products/', ProductController().router)
+  ..mount('/order/', OrderController().router);
 
 void main(List<String> args) async {
   // Use any available host or container IP (usually `0.0.0.0`).
