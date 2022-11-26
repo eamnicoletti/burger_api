@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:burger_api/app/core/database/database.dart';
 import 'package:burger_api/app/core/exceptions/email_already_registered.dart';
 import 'package:burger_api/app/core/exceptions/user_notfound_exception.dart';
@@ -60,6 +62,26 @@ class UserRepository {
     } on MySqlException catch (e, s) {
       print(e);
       print(s);
+      throw Exception();
+    } finally {
+      await conn?.close();
+    }
+  }
+
+  Future<User> findById(int id) async {
+    MySqlConnection? conn;
+    try {
+      conn = await Database().openConnection();
+      final result =
+          await conn.query('select * from usuario where id = ?', [id]);
+      final mysqlData = result.first;
+      return User(
+          id: mysqlData['id'],
+          name: mysqlData['nome'],
+          email: mysqlData['email'],
+          password: '');
+    } on MySqlException catch (e, s) {
+      log('Erro ao retornar usuario por Id', error: e, stackTrace: s);
       throw Exception();
     } finally {
       await conn?.close();
