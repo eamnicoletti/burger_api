@@ -47,4 +47,20 @@ class OrderRepository {
       await conn?.close();
     }
   }
+
+  Future<void> updateTransactionId(int orderId, String transactionId) async {
+    MySqlConnection? conn;
+    try {
+      conn = await Database().openConnection();
+      await conn.query('''
+          update pedido set id_transacao = ? where id = ? 
+        ''', [transactionId, orderId]);
+    } on MySqlException catch (e, s) {
+      log('Erro ao atualizar o id da transacao do pedido',
+          error: e, stackTrace: s);
+      throw Exception();
+    } finally {
+      await conn?.close();
+    }
+  }
 }
