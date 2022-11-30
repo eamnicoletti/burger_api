@@ -19,7 +19,7 @@ class GerencianetPix {
           'cpf': cpf,
           'nome': name,
         },
-        'valor': {'original': '$value'},
+        'valor': {'original': value.toStringAsFixed(2)},
         'chave': env['gerencianetChavePix'],
         'solicitacaoPagador': 'pedido de número $orderId no Burger Delivery',
         'infoAdicionais': [

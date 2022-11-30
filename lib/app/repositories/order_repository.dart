@@ -63,4 +63,19 @@ class OrderRepository {
       await conn?.close();
     }
   }
+
+  void confirmpaymentByTransactionId(String transaction) async {
+    MySqlConnection? conn;
+    try {
+      conn = await Database().openConnection();
+      await conn.query('''
+          update pedido set status_pedido = ? where id_transacao = ?
+        ''', ['F', transaction]);
+    } on MySqlException catch (e, s) {
+      log('Erro ao confirmar pagamento via pix', error: e, stackTrace: s);
+      throw Exception();
+    } finally {
+      await conn?.close();
+    }
+  }
 }
