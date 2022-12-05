@@ -17,7 +17,7 @@ final _router = Router()
   ..mount('/auth', AuthController().router)
   ..mount('/products/', ProductController().router)
   ..mount('/order/', OrderController().router)
-  ..mount('/gerencianet/webhook/', GerencianetWebhooksController().router);
+  ..mount('/gerencianet/', GerencianetWebhooksController().router);
 
 void main(List<String> args) async {
   // Use any available host or container IP (usually `0.0.0.0`).
